@@ -58,9 +58,9 @@ const CourseViewPage = () => {
   <div>
         <CourseDetailRow {...customComponentRowProps} />
         <div className="container">
-        <div className="row">
-  <div className="col">
-    <div className="position-relative" style={{ height: "100%" }}>
+        <div className="row justify-content-end">
+  <div className="col-3">
+    <div className="position-relative">
       <div
         style={{
           position: "absolute",
@@ -69,7 +69,6 @@ const CourseViewPage = () => {
           bottom: 0,
           left: 0,
           display: "flex",
-          justifyContent: "right",
           alignItems: "center",
         }}
       >

@@ -7,12 +7,12 @@ interface VideoPlayerProps {
 function VideoPlayer({ videoUrl }: VideoPlayerProps) {
   return (
     <div className="embed-responsive embed-responsive-16by9">
-      <iframe
-        title="Video Player"
-        className="embed-responsive-item"
-        src={videoUrl}
-        allowFullScreen
-      ></iframe>
+        <video
+          height="100%"
+          width="100%"
+          controls
+          src={"http://localhost:5555/course/video/1"}
+        />
     </div>
   );
 }

@@ -10,7 +10,7 @@ const auth = async function(req: Request,res: Response,next:NextFunction){
         if (token) {
           jwt.verify(
             token,
-            process.env.JWT_SECRET_KEY ?? "",
+            process.env.JWT_KEY ?? "",
             (err: any, decodedToken) => {
               if (err) return res.status(500).json({ err: "Invalid Token" });
               // redirect to login page

@@ -20,7 +20,7 @@ const auth = function (req, res, next) {
             const authHeader = req.headers.authorization;
             const token = (authHeader === null || authHeader === void 0 ? void 0 : authHeader.split(" ")[1]) || "";
             if (token) {
-                jsonwebtoken_1.default.verify(token, (_a = process.env.JWT_SECRET_KEY) !== null && _a !== void 0 ? _a : "", (err, decodedToken) => {
+                jsonwebtoken_1.default.verify(token, (_a = process.env.JWT_KEY) !== null && _a !== void 0 ? _a : "", (err, decodedToken) => {
                     if (err)
                         return res.status(500).json({ err: "Invalid Token" });
                     // redirect to login page

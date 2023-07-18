@@ -4,10 +4,11 @@ type Props = {
     textColor: string;
     border?:string;
     inheritParentWidth: boolean;
+    containerHeightInPx?:string;
     onClick?: () => void;
   };
   
-  const FlatButton = ({ text, backgroundColor, textColor, inheritParentWidth,border,onClick }: Props) => {
+  const FlatButton = ({ text, backgroundColor, textColor, inheritParentWidth,containerHeightInPx,border,onClick }: Props) => {
     let cursorProperty:string = onClick ? 'pointer':'default'
     const buttonStyle = {
       backgroundColor,

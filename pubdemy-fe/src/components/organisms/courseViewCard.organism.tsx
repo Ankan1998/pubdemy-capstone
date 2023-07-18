@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FlatButton from "../atoms/flatButton.atom";
 import RatingBestseller from "../molecules/ratingBestseller.molecule";
-import { faIndianRupeeSign, faRupeeSign } from "@fortawesome/free-solid-svg-icons";
+import { faIndianRupeeSign} from "@fortawesome/free-solid-svg-icons";
 
 type CourseViewCardProps = {
     imgUrl:string;
@@ -16,14 +16,14 @@ type CourseViewCardProps = {
 
 const CourseViewCard = ({imgUrl,coursePrice,courseTitle,author,rating,studentRated,discountedPrice,isBestSellerTag}:CourseViewCardProps)=>{
     return (
-    <div className="col-md-3 my-1">
+    <div className="col-2 my-1">
     <div className="card">
       {/* <Link to={`/dashboard/productdetails/${props.productdetails.id}`}> */}
         <img
           src={imgUrl}
           className="card-img-top"
           alt={courseTitle}
-          height="150px"
+          height="125px"
         />
       {/* </Link> */}
       <div className="card-body">

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FlatButton from "../atoms/flatButton.atom";
 import InitialNameCircle from "./initialNameCircle.molecule";
 
-const LoginSignUp = () => {
+const LoginSignUpHeaderComponent = () => {
   return (
     <div className="container" style={{maxWidth:'350px'}}>
       <div className="row">
@@ -30,4 +30,4 @@ const LoginSignUp = () => {
   );
 }
 
-export default LoginSignUp;
+export default LoginSignUpHeaderComponent;

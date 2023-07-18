@@ -12,7 +12,7 @@ const InitialNameCircle = ({ name }:InitialNameProp) =>{
 
   return (
     <a href="#" className="d-inline-block text-decoration-none">
-      <div className="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center" style={{ width: "40px", height: "4 0px" }}>
+      <div className="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center" style={{ width: "40px", height: "40px" }}>
         <span className="h6 m-0">{initials}</span>
       </div>
     </a>

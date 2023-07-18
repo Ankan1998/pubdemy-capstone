@@ -9,7 +9,7 @@ import RatingBestseller from '../molecules/ratingBestseller.molecule';
 import CourseViewCard from '../organisms/courseViewCard.organism';
 import CartCourseCard from '../organisms/cartCourseCard.organism';
 import CartTotal from '../molecules/cartTotal.molecule';
-import LoginSignUp from '../molecules/loginSignup.molecule';
+import LoginSignUpHeaderComponent from '../molecules/loginSignupHeaderComponent.molecule';
 import CourseEnrollCard from '../organisms/courseEnrollCard.organism';
 import CourseDetailRow from '../organisms/courseDetailRow.organism';
 import BorderBoxRow from '../organisms/courseOffering.organism';
@@ -18,6 +18,9 @@ import CourseDescriptionRow from '../organisms/courseDescription.organism';
 import CourseOfferingRow from '../organisms/courseOffering.organism';
 import CourseViewPage from '../pages/courseView.page';
 import NotLoggedInHeader from '../organisms/notLoggedInHeader.organism';
+import LoginSignUpPage from '../pages/loginSignUp.page';
+import CourseLandingPage from '../pages/courseLanding.page';
+import ShoppingCart from '../pages/shoppingCart.page';
 
 function App() {
   return (      
@@ -43,8 +46,11 @@ function App() {
 // <ParagraphRow {...paragraphRowProps} />
 // </div> */}
 <div>
-  <NotLoggedInHeader/>
-<CourseViewPage/>
+  <ShoppingCart/>
+  {/* <CourseLandingPage/> */}
+  {/* <LoginSignUpPage/> */}
+  {/* <NotLoggedInHeader/>*/}
+{/* <CourseViewPage/>  */}
 </div>
 
     // {/* <div className="d-flex justify-content-center align-items-center"><SignupForm></SignupForm></div></div> */}

@@ -61,7 +61,7 @@ const CourseViewPage = () => {
         <div className="row justify-content-end">
   <div className="col-3">
     <div className="position-relative">
-      <div
+      <div 
         style={{
           position: "absolute",
           top: 100,

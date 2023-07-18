@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './cartCourseCard.css';
 import { faTags } from '@fortawesome/free-solid-svg-icons';
 import RatingBestseller from '../molecules/ratingBestseller.molecule';
 import LengthLecture from '../molecules/lengthLectureTag.molecule';
@@ -21,10 +20,10 @@ type CartCourseCardProps = {
 
 const CartCourseCard = ({imgUrl,title,author,rating,isBestSeller,numStudentRated,numLecture,lectureLength,actualPrice,discountedPrice}:CartCourseCardProps) => {
   return (
-    <div className="cartCourseComponent">
-      <div className="row">
+    // <div className="cartCourseComponent">
+      <div className="row shadow-sm" style={{padding:"5px"}}>
         <div className="col-2">
-          <img src={imgUrl} alt="Image" />
+          <img src={imgUrl} alt={title} style={{ width: "100%" }}/>
         </div>
         <div className="col-6 d-flex flex-column">
           <strong>{title}</strong>
@@ -46,7 +45,7 @@ const CartCourseCard = ({imgUrl,title,author,rating,isBestSeller,numStudentRated
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 }
 

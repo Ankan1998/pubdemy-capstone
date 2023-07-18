@@ -1,4 +1,3 @@
-import React from "react";
 import RatingBestseller from "../molecules/ratingBestseller.molecule";
 import CustomText from "../atoms/customText.atom";
 import IconTextBox from "../atoms/iconTextBox.atom";

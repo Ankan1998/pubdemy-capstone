@@ -1,5 +1,10 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import FlatButton from '../atoms/flatButton.atom';
+import { useState } from 'react';
+import axios from 'axios';
+import {  useNavigate } from 'react-router-dom';
+import ErrorAtom from '../atoms/error.atom';
+import ErrorPopup from '../organisms/error.organism';
+
 
 type FormData = {
     name:string;
@@ -13,12 +18,29 @@ const SignupForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  const [showError, setShowError] = useState(false);
+  const navigate = useNavigate();
 
-  const onSubmit=(data:FormData) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5555/user/signup',
+        data
+      );
+      if(response.status >=200 && response.status<300){
+        navigate('/')
+      }
+    } catch (error) {
+      setShowError(true)
+    }
+  };
+  const handleCancelClick = () => {
+    setShowError(false);
   };
 
-  return (
+  return (<div>
+    
+    {showError && <ErrorPopup/>}
     <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-group">
         <input
@@ -73,11 +95,10 @@ const SignupForm = () => {
         )}
       </div>
       <div style={{ marginTop: '10px' }}>
-      <FlatButton text={'Sign Up'} backgroundColor={'purple'} textColor={'white'} inheritParentWidth={true} onClick={function (): void {
-        console.log("clicked");
-      } } />
+      <button className={`btn rounded-0 w-100 text-white`} style={{backgroundColor:"purple",fontWeight:"bold"}}>Signup</button>
       </div>
     </form>
+    </div>
   );
 };
 

@@ -1,57 +1,59 @@
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CourseDescriptionRow from "../organisms/courseDescription.organism";
 import CourseDetailRow from "../organisms/courseDetailRow.organism";
 import CourseEnrollCard from "../organisms/courseEnrollCard.organism";
 import CourseOfferingRow from "../organisms/courseOffering.organism";
 import CourseRequirementRow from "../organisms/courseRequirement.organism";
+import { useCourseDetailProvider } from "../../customHooks/courseDetailProvider.hook";
+import { CourseModel } from "../../models/course.model";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/reducers/cart.reducer";
+import { useIsAddedToCart } from "../../customHooks/isAddedToCart.hook";
 
 const CourseViewPage = () => {
-    const borderBoxRowProps = {
-      offerings: [
-        "Item 1",
-        "Item 2",
-        "Item 3",
-        "Item 4",
-        "Item 5",
-        "Item 6",
-        "Item 7",
-        "Item 8",
-        "Item 9",
-        "Item 10",
+  const courseDetailProviderHook = useCourseDetailProvider;
+  const isCourseInCart = useIsAddedToCart;
+  const { id = "" } = useParams();
+  const course:CourseModel = courseDetailProviderHook(parseInt(id))
+  let dispatch = useDispatch()
+  const navigate = useNavigate();
+
+
+    const CourseContentRowProps = {
+      offerings: [...course.courseContent
       ],
     };
   
-    const pointwiseTextRowProps = {
-      requirements: [
-        "Point 1",
-       "Point 2",
-        "Point 3",
-        "Point 4",
-        "Point 5",
+    const RequirementRowProps = {
+      requirements: [...course.requirements
       ],
     };
   
-    const paragraphRowProps = {
-      title: "Paragraph Row",
-      paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed gravida dui at elit eleifend, vitae luctus velit ullamcorper. Sed vel tempus dolor. Mauris sed enim ac leo blandit efficitur. Suspendisse potenti. Proin eget lacus vel sem euismod sodales. Aliquam maximus accumsan nisi, quis vehicula tellus efficitur ut.",
+    const DescriptionRowProps = {
+      paragraph: course.description
     };
   
     const customComponentRowProps = {
-      title: "The Complete Python Bootcamp in Python",
-      subtitle: "Learn Python like a Professional Start from the basics and go all the way to creating your own applications and gamese",
-      author: "Angela",
-      isBestseller:true,
-      rating:4.7,
-      numStudentRated:454,
-      numStudentEnrolled:5656,
-      lastUpdated:"12/2022",
-      language:"English",
+      title: course.courseTitle,
+      subtitle: course.courseSubtitle,
+      author: course.author,
+      isBestseller:course.isBestseller,
+      rating:course.rating,
+      numStudentRated:course.studentRated,
+      numStudentEnrolled:course.studentEnrolled,
+      lastUpdated:course.lastUpdated,
+      language:course.language,
     };
     const cardProps = {
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      title: "Card Title",
+      videoUrl: `http://localhost:5555/course/video/${course.id}`,
       price:3999,
-      onAddCartClick:()=>{},
-      onBuyNowClick:()=>{},
+      isOnAddCartDisable:isCourseInCart(course.id),
+      onAddCartClick:()=>{
+        dispatch(addToCart(course))
+      },
+      onBuyNowClick:()=>{
+        navigate('/cart');
+      },
       
     };
     return (
@@ -81,17 +83,17 @@ const CourseViewPage = () => {
   
         <div className='row'>
         <div className="col-8"> 
-            <CourseOfferingRow {...borderBoxRowProps} />      
+            <CourseOfferingRow {...CourseContentRowProps} />      
           </div>
           </div>
         <div className="row">
           <div className="col-8">
-            <CourseRequirementRow {...pointwiseTextRowProps} />
+            <CourseRequirementRow {...RequirementRowProps} />
           </div>
         </div>
         <div className="row">
           <div className="col-8">
-            <CourseDescriptionRow {...paragraphRowProps} />
+            <CourseDescriptionRow {...DescriptionRowProps} />
           </div>
         </div>
   

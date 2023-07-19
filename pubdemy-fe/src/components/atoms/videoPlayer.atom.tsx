@@ -11,7 +11,7 @@ function VideoPlayer({ videoUrl }: VideoPlayerProps) {
           height="100%"
           width="100%"
           controls
-          src={"http://localhost:5555/course/video/1"}
+          src={videoUrl}
         />
     </div>
   );

@@ -4,7 +4,7 @@ export class CourseModel {
       public courseTitle: string = "",
       public courseSubtitle: string = "",
       public author: string = "",
-      public rating: string = "",
+      public rating: number = 0,
       public studentRated: number = 0,
       public studentEnrolled: number = 0,
       public price: number = 0,

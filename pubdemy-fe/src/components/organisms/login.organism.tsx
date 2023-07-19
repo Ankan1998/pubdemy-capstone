@@ -1,12 +1,11 @@
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import CustomText from "../atoms/customText.atom";
-import FlatButton from "../atoms/flatButton.atom";
 import IconTextBox from "../atoms/iconTextBox.atom";
 import LoginForm from "../molecules/loginForm.molecule";
 
 const Login = ()=>{
     return (
-        <div className="container">
+        <div className="container py-3">
             <div className="row justify-content-center">
                 <div className="col-3 d-flex flex-column gap-2">
                     <strong><CustomText text={"Log in to your Pubdemy account"}/></strong>

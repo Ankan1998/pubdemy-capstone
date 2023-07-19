@@ -3,7 +3,7 @@ import SignupForm from "../molecules/signupForm.molecule";
 
 const SignUp = ()=>{
     return (
-        <div className="container">
+        <div className="container" style ={{paddingTop:"7%",paddingBottom:"3%"}}>
         <div className="row justify-content-center">
             <div className="col-3 d-flex flex-column gap-2">
                 <strong><CustomText text={"Sign Up and start learning"}/></strong>
@@ -19,3 +19,4 @@ const SignUp = ()=>{
 }
 
 export default SignUp;
+

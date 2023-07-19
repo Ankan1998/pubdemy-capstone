@@ -1,29 +1,67 @@
-import React from 'react';
-import LoginForm from '../molecules/loginForm.molecule';
-import SignupForm from '../molecules/signupForm.molecule';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import IconTextBox from '../atoms/iconTextBox.atom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import FlatButton from '../atoms/flatButton.atom';
-import RatingBestseller from '../molecules/ratingBestseller.molecule';
-import CourseViewCard from '../organisms/courseViewCard.organism';
-import CartCourseCard from '../organisms/cartCourseCard.organism';
-import CartTotal from '../molecules/cartTotal.molecule';
-import LoginSignUpHeaderComponent from '../molecules/loginSignupHeaderComponent.molecule';
-import CourseEnrollCard from '../organisms/courseEnrollCard.organism';
-import CourseDetailRow from '../organisms/courseDetailRow.organism';
-import BorderBoxRow from '../organisms/courseOffering.organism';
-import CourseRequirementRow from '../organisms/courseRequirement.organism';
-import CourseDescriptionRow from '../organisms/courseDescription.organism';
-import CourseOfferingRow from '../organisms/courseOffering.organism';
 import CourseViewPage from '../pages/courseView.page';
-import NotLoggedInHeader from '../organisms/notLoggedInHeader.organism';
+import Header from '../organisms/Header.organism';
 import LoginSignUpPage from '../pages/loginSignUp.page';
 import CourseLandingPage from '../pages/courseLanding.page';
 import ShoppingCart from '../pages/shoppingCart.page';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import SignUp from '../organisms/signup.organism';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../redux/store/store';
+import { SearchBarContextProvider } from '../../context/searchBar.context';
+import CheckoutPage from '../pages/checkout.page';
+import { CheckoutValidationContextProvider } from '../../context/checkoutValidation.context';
+import Congratulations from '../pages/congratulation.page';
+import RequireAuthRoute from '../hoc/requireAuthRoute.hoc';
+import Footer from '../organisms/footer.organism';
 
 function App() {
-  return (      
+  const isAuthenticated = useSelector((store:AppState)=>store.user.isUserAuthenticated)
+  const hideFooterRoutes = ['/checkout','/congratulation'];
+
+  const shouldHideFooter = (path:any) => {
+    return hideFooterRoutes.includes(path);
+  };
+  return (
+    <BrowserRouter>
+    
+    <SearchBarContextProvider><Header isAuthenticated={isAuthenticated}/>
+    <CheckoutValidationContextProvider>
+    <Routes>
+        <Route path="/" element={<LoginSignUpPage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+            path="/courses"
+            element={
+              <RequireAuthRoute>
+                <CourseLandingPage />
+              </RequireAuthRoute>
+            }
+          />
+        <Route path="/coursedetail/:id" element={<RequireAuthRoute><CourseViewPage /></RequireAuthRoute> } />
+        <Route path="/cart" element={<RequireAuthRoute><ShoppingCart /></RequireAuthRoute>} />
+        <Route path="/checkout" element={<RequireAuthRoute><CheckoutPage /></RequireAuthRoute>} />
+        <Route path="/congratulation" element={<RequireAuthRoute><Congratulations /></RequireAuthRoute>} />
+        <Route
+          path="*"
+          element={
+            <img
+              src="https://media.licdn.com/dms/image/C5612AQEPYce5KpNLyg/article-cover_image-shrink_720_1280/0/1551659700811?e=2147483647&v=beta&t=O9mBMiF-V12jCRJwaBNDWLKNL8cku2QSoCXtKP3vCHg"
+              alt="Resource Not Found"
+            />
+          }
+        />
+      </Routes>
+      </CheckoutValidationContextProvider>
+      </SearchBarContextProvider>
+      
+      {!shouldHideFooter(window.location.pathname) && <Footer />}
+    </BrowserRouter>
+  );
+}
+
+export default App;
+
+
   // <div className='row'>
   //   {/* <CourseViewCard imgUrl={'https://wallpapers.com/images/featured/sukuna-xjixgtkkwa2ovcwy.jpg'} courseTitle={'The 100 days of Python Coding'} author={'Dr. Angela Yu'} rating={3.2} studentEnrolled={56445} coursePrice={5444} discountedPrice={543} isBestSellerTag={true}/> */}
   //   {/* <CartCourseCard imgUrl={"https://wallpapers.com/images/featured/sukuna-xjixgtkkwa2ovcwy.jpg"} title={"100 days of Python Coding"} author={"Henry Olsen"} rating={4.5} isBestSeller={true} numStudentRated={54645} numLecture={345} lectureLength={33} actualPrice={5777} discountedPrice={599}/> */}
@@ -54,10 +92,6 @@ function App() {
 </div>
 
     // {/* <div className="d-flex justify-content-center align-items-center"><SignupForm></SignupForm></div></div> */}
-  );
-}
-
-export default App;
 
 
 

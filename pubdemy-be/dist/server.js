@@ -16,7 +16,7 @@ mongoose_1.default.connection.on("open", () => {
     console.log("PubdemyDB connected successfully !");
 });
 var app = (0, express_1.default)();
-app.use((0, cors_1.default)()); // enable cors at application level
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));

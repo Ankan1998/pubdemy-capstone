@@ -20,10 +20,10 @@ const course_model_1 = __importDefault(require("../models/course_model"));
 const video_model_1 = __importDefault(require("../models/video_model"));
 var router = express_1.default.Router();
 // Get random 5 course
-router.get('/random', middleware_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/random', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const randomVideos = yield course_model_1.default.aggregate([{ $sample: { size: 5 } }]);
-        res.json(randomVideos);
+        const randomCourses = yield course_model_1.default.aggregate([{ $sample: { size: 5 } }]);
+        res.json(randomCourses);
     }
     catch (error) {
         console.error(error);
@@ -31,7 +31,7 @@ router.get('/random', middleware_1.default, (req, res) => __awaiter(void 0, void
     }
 }));
 // Get course according to search matching courseTitle
-router.get('/search', middleware_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/search', middleware_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let query = req.query.courseQuery;
         const regex = new RegExp(query, 'i');
@@ -47,10 +47,8 @@ router.get('/search', middleware_1.default, (req, res) => __awaiter(void 0, void
 router.get('/video/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let theProduct = yield video_model_1.default.findOne({ id: parseInt(req.params.id) });
-        console.log(theProduct);
         let videoPath = (theProduct === null || theProduct === void 0 ? void 0 : theProduct.videoUrl) || "";
         let vPath = path_1.default.resolve(videoPath);
-        console.log(vPath);
         const fileSize = fs_1.default.statSync(vPath).size;
         const range = req.headers.range;
         if (range) {
@@ -76,20 +74,6 @@ router.get('/video/:id', (req, res) => __awaiter(void 0, void 0, void 0, functio
             res.writeHead(200, headers);
             fs_1.default.createReadStream(videoPath).pipe(res);
         }
-        // const range = req.headers.range;
-        // const chunk_size = 10 ** 6; // 1MB
-        // let start = Number(range?.replace(/\D/g, ""));        
-        // const end = Math.min(start + chunk_size, videoSize - 1);
-        // const contentLength = end - start + 1;
-        // const headers = {
-        //   "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-        //   "Accept-Ranges": "bytes",
-        //   "Content-Type": "video/mp4",
-        //   "Content-Length": contentLength,
-        // };
-        // const videoStream = fs.createReadStream(videoPath, { start, end });
-        // res.writeHead(206, headers);
-        // videoStream.pipe(res);
     }
     catch (error) {
         console.log(error);

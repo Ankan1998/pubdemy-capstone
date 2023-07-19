@@ -2,7 +2,9 @@ import axios, { AxiosResponse } from "axios";
 import { CourseModel } from "../models/course.model";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
-import { setRandomCourses } from "../redux/reducers/course.reducer";
+import { setRandomCourses, setSearchCourses } from "../redux/reducers/course.reducer";
+import { CourseWithSearchModel } from "../models/courseWithSearch.model";
+import { setErrorx, unsetErrorx } from "../redux/reducers/error.reducer";
 
 function GetRandomCourses(token: string) {
     return axios.post<AxiosResponse<CourseModel[]>>(
@@ -10,19 +12,22 @@ function GetRandomCourses(token: string) {
       {},
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
       },
     );
   }
 
-  function GetSearchCourses(token: string) {
+  function GetSearchCourses(tokenQuery:string[]) {
     return axios.post<AxiosResponse<CourseModel[]>>(
       "http://localhost:5555/course/search",
-      {},
+      {}, 
       {
+        params: {
+          courseQuery: tokenQuery[1],
+        },
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenQuery[0]}`,
         },
       },
     );
@@ -35,16 +40,18 @@ function GetRandomCourses(token: string) {
         GetRandomCourses,
         action.payload,
       ); 
-  
+  console.log(response.data)
       if (response.status === 200) {
+        yield put(unsetErrorx());
         yield put(setRandomCourses(response.data));
       }
     } catch (error) {
+      yield put(setErrorx());
       console.log(error); // dipatch an action with error
     }
   }
 
-  export function* fetchSearchCourses(action: PayloadAction<string>) {
+  export function* fetchSearchCourses(action: PayloadAction<string[]>) {
     try {
       const response: AxiosResponse<CourseModel[]> = yield call(
         GetSearchCourses,
@@ -52,22 +59,12 @@ function GetRandomCourses(token: string) {
       ); 
   
       if (response.status === 200) {
-        yield put(setRandomCourses(response.data));
+        yield put(unsetErrorx());
+        yield put(setSearchCourses(response.data));
       }
     } catch (error) {
+      yield put(setErrorx());
       console.log(error); // dipatch an action with error
     }
   }
-  
-  // export function* fetchProductsWithRetry() {
-  //   try {
-  //     let duration = 1000;
-  //     let response: AxiosResponse<ProductModel[]> = yield retry(
-  //       3,
-  //       duration * 10,
-  //       GetAllProducts,
-  //     );
-  //     yield put(setAllProducts(response.data));
-  //   } catch (error) {}
-  // }
   

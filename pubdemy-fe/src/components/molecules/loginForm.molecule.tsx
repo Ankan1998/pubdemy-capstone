@@ -1,5 +1,14 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import FlatButton from '../atoms/flatButton.atom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { SagaActions } from '../../saga/saga.actions';
+import { LoginModel } from '../../models/login.model';
+import { AppDispatch, AppState } from '../../redux/store/store';
+import { setErrorx, unsetErrorx } from '../../redux/reducers/error.reducer';
+import ErrorAtom from '../atoms/error.atom';
+import { logOut } from '../../redux/reducers/user.reducer';
+import ErrorPopup from '../organisms/error.organism';
 
 type FormData = {
   email: string;
@@ -13,11 +22,32 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  const navigate = useNavigate();
+  let dispatch = useDispatch<AppDispatch>();
+
+
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+    const loginModel:LoginModel = new LoginModel()
+    loginModel.email = data.email
+    loginModel.password = data.password
+    dispatch({
+      type: SagaActions.LOGIN_ASYNC,
+      payload: loginModel,
+    });
   };
+  const isError = useSelector((store: AppState) => store.reduxError.isError);
+  const isAuthenticated = useSelector((store:AppState)=>store.user.isUserAuthenticated)
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/courses'); 
+    }
+  }, [isAuthenticated]);
+
 
   return (
+    <div>
+          {isError && <ErrorPopup/>} 
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
         <input
@@ -57,11 +87,10 @@ const LoginForm = () => {
         )}
       </div>
       <div style={{ marginTop: '10px' }}>
-      <FlatButton text={'Log In'} backgroundColor={'purple'} textColor={'white'} inheritParentWidth={true} onClick={function (): void {
-        console.log("clicked");
-      } } />
+      <button className={`btn rounded-0 w-100 text-white`} style={{backgroundColor:"purple",fontWeight:"bold"}}>Login</button>
       </div>
     </form>
+    </div>
   );
 };
 

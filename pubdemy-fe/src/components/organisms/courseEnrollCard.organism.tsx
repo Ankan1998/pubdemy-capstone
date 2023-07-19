@@ -3,10 +3,12 @@ import CustomText from "../atoms/customText.atom";
 import FlatButton from "../atoms/flatButton.atom";
 import IconTextBox from "../atoms/iconTextBox.atom";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { useIndianRupeeFormatter } from "../../customHooks/IndianRupee.hook";
 
 type CourseEnrollCardProps = {
   videoUrl: string;
   price: number;
+  isOnAddCartDisable:boolean
   onAddCartClick:()=>void;
   onBuyNowClick:()=>void;
 }
@@ -14,19 +16,21 @@ type CourseEnrollCardProps = {
 const CourseEnrollCard = ({
   videoUrl,
   price,
+  isOnAddCartDisable,
   onAddCartClick,
   onBuyNowClick,
  
 }: CourseEnrollCardProps) => {
+  const rupeeFormatter = useIndianRupeeFormatter
   return (
     <div className="card">
       <div className="card-body p-0">
          <VideoPlayer videoUrl={videoUrl} /> {/* Need to modify with iframe*/}
         <div className="card-body px-3">
-          <h3><strong><CustomText text={`Rs. ${price.toString()}`}/></strong></h3>
+          <h3><strong><CustomText text={rupeeFormatter(price)}/></strong></h3>
           <div className="d-flex flex-column align-items-center justify-content-center mt-3 gap-2">
-          <FlatButton text={"Add to cart"} backgroundColor={"purple"} textColor={"white"} inheritParentWidth={true} onClick={onAddCartClick}/>
-          <FlatButton text={"Buy Now"} backgroundColor={"white"} textColor={"black"} inheritParentWidth={true} onClick={onBuyNowClick} border="1px solid black"/>
+          <FlatButton text={"Add to cart"} backgroundColor={"purple"} textColor={"white"} inheritParentWidth={true} onClick={onAddCartClick} isDisabled={isOnAddCartDisable}/>
+          <FlatButton text={"Buy Now"} backgroundColor={"white"} textColor={"black"} inheritParentWidth={true} onClick={onBuyNowClick} border="1px solid black" />
           <CustomText text={"30-Day Money-back Guarantee"} color="grey"/>
           </div>
           <div className="my-3">

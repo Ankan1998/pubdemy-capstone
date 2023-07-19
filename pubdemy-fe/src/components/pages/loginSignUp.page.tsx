@@ -1,14 +1,11 @@
 import Login from "../organisms/login.organism";
-import NotLoggedInHeader from "../organisms/notLoggedInHeader.organism";
+import Header from "../organisms/Header.organism";
 import SignUp from "../organisms/signup.organism";
 
 const LoginSignUpPage = ()=>{
-    return (
-        <div>
-            <NotLoggedInHeader/>
-            <SignUp/>
-
-        </div>
+    return (<div className="container" style ={{paddingTop:"5%"}}>
+            <Login/>
+            </div>
     );
 }
 

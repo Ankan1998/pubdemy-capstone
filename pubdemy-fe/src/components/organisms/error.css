@@ -1,0 +1,29 @@
+.error-popup {
+    position: relative;
+    background-color: #f8d7da; /* Light red background color */
+    border: 2px solid #dc3545; /* Red border color */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px; /* Some margin at the bottom to separate from other content */
+  }
+  
+  .error-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .close-icon {
+    cursor: pointer;
+    margin-right: 10px;
+    color: #dc3545; /* Red color for the close icon */
+  }
+  
+  h5 {
+    margin: 0;
+  }
+  
+  p {
+    margin-top: 5px;
+  }
+  

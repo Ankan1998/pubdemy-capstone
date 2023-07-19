@@ -66,19 +66,4 @@ router.post('/login', async (req, res) => {
     }
 })
 
-// // User logout
-// router.get('/logout', auth, async (req:Request, res:Response) => {
-//     let reqBody = req.body;
-//     try {
-//         reqBody.user.tokens = reqBody.user.tokens.filter((token:any) => {
-//             return token.token != reqBody.token
-//         })
-//         reqBody.user.save()
-//         res.send("User logged out")
-//     } catch(e) {
-//         res.status(400).json({msg:"Cannot logout Right Now"})
-//     }
-
-// })
-
 export default router;

@@ -5,10 +5,11 @@ type Props = {
     border?:string;
     inheritParentWidth: boolean;
     containerHeightInPx?:string;
-    onClick?: () => void;
+    onClick?:any;
+    isDisabled?:boolean
   };
   
-  const FlatButton = ({ text, backgroundColor, textColor, inheritParentWidth,containerHeightInPx,border,onClick }: Props) => {
+  const FlatButton = ({ text, backgroundColor, textColor, inheritParentWidth,containerHeightInPx,border,onClick,isDisabled }: Props) => {
     let cursorProperty:string = onClick ? 'pointer':'default'
     const buttonStyle = {
       backgroundColor,
@@ -18,14 +19,10 @@ type Props = {
       cursor: cursorProperty
     };
     const parentWidth = inheritParentWidth ? "w-100" : ""
-    const onHandleClick = ()=>{
-        if(onClick){
-            onClick();
-        }
-    }
+    const isDisabledX:boolean = isDisabled?isDisabled:false
   
     return (
-      <button className={`btn rounded-0 ${parentWidth}`} style={buttonStyle} onClick={onHandleClick}>
+      <button className={`btn rounded-0 ${parentWidth}`} style={buttonStyle} onClick={onClick} disabled={isDisabledX}>
         {text}
       </button>
     );

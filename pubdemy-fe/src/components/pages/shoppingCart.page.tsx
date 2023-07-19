@@ -1,22 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import CustomText from "../atoms/customText.atom";
 import CartCourseCard from "../organisms/cartCourseCard.organism";
-import NotLoggedInHeader from "../organisms/notLoggedInHeader.organism";
+import { AppState } from "../../redux/store/store";
+import { useSelector } from "react-redux";
+import { CourseModel } from "../../models/course.model";
+import CartTotal from "../molecules/cartTotal.molecule";
 
 const ShoppingCart = ()=>{
+    let cart = useSelector((store:AppState)=> store.cart);
+    let navigate = useNavigate()
+
     return (
-        <div>
-            <NotLoggedInHeader/>
-            <div className="container">
+            <div className="container" style={{paddingTop:"5%", paddingBottom:"3%"}}>
                 <div className="row">
-                <h3><strong><CustomText text={"Shopping Cart"}/></strong></h3>
+                <h1><strong><CustomText text={"Shopping Cart"}/></strong></h1>
                 </div>
-                <div className="row">
-                    <CustomText text={"Courses in Cart"} color="grey"/>
-                    <CartCourseCard imgUrl={"https://wallpapers.com/images/featured/sukuna-xjixgtkkwa2ovcwy.jpg"} title={""} author={""} rating={0} isBestSeller={false} numStudentRated={0} numLecture={0} lectureLength={0} actualPrice={0} discountedPrice={0}/>
-                    
+                <div className="row gap">
+                    <div className="col-9 d-flex flex-column">
+                    <CustomText text={`${cart.cartSize} Courses in Cart`} color="grey"/>
+                    {cart.courses.map((course:CourseModel)=>(<CartCourseCard courseId={course.id} imgUrl={course.imageUrl} title={course.courseTitle} author={course.author} rating={course.rating} isBestSeller={course.isBestseller} numStudentRated={course.studentRated} numLecture={course.numOfLectures} lectureLength={course.courseLength} actualPrice={course.price} discountedPrice={course.discountedPrice} subTitle={course.courseSubtitle}/>))}   
+                    </div> 
+                    <div className="col-3">
+                        <CartTotal actualTotalPrice={cart.totalActualPrice} discountedTotalPrice={cart.totalDiscountedPrice} onClickCheckout={()=>navigate('/checkout')}/>
+                        </div>             
                 </div>
             </div>
-        </div>
     );
 }
 

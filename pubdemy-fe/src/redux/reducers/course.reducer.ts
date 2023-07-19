@@ -1,44 +1,40 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CourseModel } from "../../models/course.model";
+import { CourseWithSearchModel } from "../../models/courseWithSearch.model";
 
-let initialState: CourseModel[] = [];
+let initialState: CourseWithSearchModel={
+  randomCourses: [],
+  searchedCourses: [],
+  cachedCourseData:[]
+} ;
 export const coursesSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
-    // incrementLikes: (store, action: PayloadAction<number>) => {
-    //   // console.log(action);
-    //   // console.log("Within Products Reducer !");
-    //   let id = action.payload;
-    //   // change biz logic
-    //   let index = store.findIndex(product => product.id === id);
-    //   store[index].likes++; // Immer library
-    //   return store;
-    // },
-    // deleteProduct: (store, action: PayloadAction<number>) => {
-    //   let id = action.payload; // passed from the UI
-    //   store = store.filter((product: ProductModel) => product.id !== id);
-    //   return store;
-    // },
-    // addNewProduct: (store, action: PayloadAction<ProductModel>) => {
-    //   store.push(action.payload);
-    //   return store;
-    // },
     setSearchCourses: (store, action: PayloadAction<CourseModel[]>) => {
-        action.payload.forEach((courseNew:CourseModel)=>{
-            if(!store.some((course:CourseModel)=>course.id===courseNew.id)){
-                store.push(courseNew);
-            }
-        })
-        return store;
+      store.searchedCourses = []
+      for(let i=0;i<action.payload.length;i++){
+        store.searchedCourses.push(action.payload[i])
+        store.cachedCourseData.push(action.payload[i])
+      }
+      return store;
       },
     setRandomCourses: (store, action: PayloadAction<CourseModel[]>) => {
-      store = action.payload;
+      store.randomCourses = []
+      for(let i=0;i<action.payload.length;i++){
+        store.randomCourses.push(action.payload[i])
+        store.cachedCourseData.push(action.payload[i])
+      }
       return store;
     },
+    emptyCourse:(store)=>{
+      store.cachedCourseData=[]
+      store.randomCourses=[]
+      store.searchedCourses =[]
+    }
   },
 });
 
-export const { setSearchCourses,setRandomCourses } =
+export const { setSearchCourses,setRandomCourses,emptyCourse } =
   coursesSlice.actions;
 export default coursesSlice.reducer;
